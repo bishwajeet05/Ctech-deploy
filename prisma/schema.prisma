@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication and profile
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?   @db.Text
+  password      String
+  type          String    @default("USER") // "ADMIN" or "USER"
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  documents     Document[]
+  orders        Order[]
+  sessions      Session[]
+
+  @@map("users")
+}
+
+// Session model for authentication
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// Document model for file management
+model Document {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text
+  url         String   @db.Text
+  type        String
+  size        Int
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("documents")
+}
+
+// Order model for tracking client orders
+model Order {
+  id          String   @id @default(cuid())
+  number      String   @unique
+  status      String   @default("pending") // "pending", "processing", "completed", "cancelled"
+  total       Float
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("orders")
+}
+
+// Enums
+enum UserType {
+  ADMIN
+  USER
+}
+
+enum OrderStatus {
+  pending
+  processing
+  completed
+  cancelled
+}

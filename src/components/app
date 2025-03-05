@@ -1,0 +1,14 @@
+interface LogoProps {
+  variant?: 'light' | 'dark'
+}
+
+export function Logo({ variant = 'dark' }: LogoProps) {
+  const textColor = variant === 'light' ? 'text-white' : 'text-gray-900'
+  const accentColor = variant === 'light' ? 'text-blue-400' : 'text-blue-600'
+
+  return (
+    <div className={`font-bold text-2xl ${textColor}`}>
+      <span className={accentColor}>C</span>adratec
+    </div>
+  )
+} 

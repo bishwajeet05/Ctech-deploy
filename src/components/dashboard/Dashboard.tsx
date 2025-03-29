@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import Header from './Header';
+import Header from './admin-header';
 import StatCard from './StatCard';
 import OrderTable from './OrderTable';
 import GridView from './GridView';

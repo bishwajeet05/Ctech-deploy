@@ -6,6 +6,7 @@ const prisma = new PrismaClient()
 async function main() {
   try {
     // Clean existing data
+    await prisma.orderItem.deleteMany()
     await prisma.order.deleteMany()
     await prisma.document.deleteMany()
     await prisma.session.deleteMany()
@@ -56,22 +57,66 @@ async function main() {
       },
     })
 
-    // Create sample orders
-    await prisma.order.create({
+    // Create sample orders with items
+    const order1 = await prisma.order.create({
       data: {
         number: 'ORD-2024-001',
-        status: 'pending',
+        poNumber: 'PO-001',
+        orderConfirmation: 'AU-00274',
+        orderConfirmationDate: new Date('2024-07-25'),
+        requiredDeliveryDate: new Date('2024-07-30'),
+        status: 'completed',
         total: 1500.00,
         userId: user.id,
+        items: {
+          create: [
+            {
+              modelNo: 'Silver Soleil',
+              qtyOrdered: 50,
+              qtyDelivered: 50,
+              qtyPending: 0,
+              status: 'delivered'
+            },
+            {
+              modelNo: 'Black Soleil',
+              qtyOrdered: 60,
+              qtyDelivered: 60,
+              qtyPending: 0,
+              status: 'delivered'
+            }
+          ]
+        }
       },
     })
 
-    await prisma.order.create({
+    const order2 = await prisma.order.create({
       data: {
         number: 'ORD-2024-002',
-        status: 'processing',
+        poNumber: 'PO-002',
+        orderConfirmation: 'AU-00275',
+        orderConfirmationDate: new Date('2024-07-25'),
+        requiredDeliveryDate: new Date('2024-08-01'),
+        status: 'partial',
         total: 2750.50,
         userId: user.id,
+        items: {
+          create: [
+            {
+              modelNo: 'Platinum Elite Series',
+              qtyOrdered: 75,
+              qtyDelivered: 75,
+              qtyPending: 0,
+              status: 'delivered'
+            },
+            {
+              modelNo: 'Rose Gold Collection',
+              qtyOrdered: 45,
+              qtyDelivered: 0,
+              qtyPending: 45,
+              status: 'pending'
+            }
+          ]
+        }
       },
     })
 

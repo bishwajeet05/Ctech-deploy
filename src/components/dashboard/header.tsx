@@ -1,36 +1,44 @@
-"use client"
+"use client";
 
-import { signOut } from "next-auth/react"
-import { Button } from "@/components/ui/button"
-import { ThemeSwitcher } from "@/components/theme-switcher"
+import React from 'react';
+import Image from 'next/image';
+import { Bell, Settings } from 'lucide-react';
 
-interface DashboardHeaderProps {
-  userName?: string | null
-}
+type HeaderProps = {
+  title: string;
+  description?: string;
+  actions?: React.ReactNode;
+};
 
-export function DashboardHeader({ userName }: DashboardHeaderProps) {
+const Header = ({ title, description, actions }: HeaderProps) => {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-lg font-semibold">Cadratec</span>
-          <span className="text-sm text-muted-foreground">Client Portal</span>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <ThemeSwitcher />
-          
-          <div className="flex items-center gap-2">
-            <span className="text-sm">Welcome, {userName || 'Client'}</span>
-            <Button
-              variant="outline"
-              onClick={() => signOut({ callbackUrl: '/auth/login' })}
-            >
-              Logout
-            </Button>
-          </div>
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+        <div className="flex items-center space-x-4">
+          <button className="p-1.5 rounded-full hover:bg-muted transition-colors">
+            <Bell size={20} className="text-muted-foreground" />
+          </button>
+          <button className="p-1.5 rounded-full hover:bg-muted transition-colors">
+            <Settings size={20} className="text-muted-foreground" />
+          </button>
+          <button className="relative w-8 h-8 rounded-full overflow-hidden">
+            <Image
+              src="/images/Dashboard/profile.jpg"
+              alt="Profile"
+              fill
+              className="object-cover"
+            />
+          </button>
         </div>
       </div>
-    </header>
-  )
-} 
+      
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-muted-foreground">{description}</p>
+        {actions}
+      </div>
+    </div>
+  );
+};
+
+export default Header; 

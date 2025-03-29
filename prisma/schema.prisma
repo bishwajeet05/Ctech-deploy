@@ -17,8 +17,8 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   image         String?   @db.Text
-  password      String
-  type          String    @default("USER") // "ADMIN" or "USER"
+  hashedPassword String?
+  role          String    @default("USER") // "ADMIN" or "USER"
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -59,16 +59,43 @@ model Document {
 
 // Order model for tracking client orders
 model Order {
-  id          String   @id @default(cuid())
-  number      String   @unique
-  status      String   @default("pending") // "pending", "processing", "completed", "cancelled"
-  total       Float
-  userId      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                    String      @id @default(cuid())
+  number                String      @unique
+  poNumber              String?     // Purchase Order Number
+  orderConfirmation     String?     // Order Confirmation Number
+  orderConfirmationDate DateTime?
+  requiredDeliveryDate  DateTime?
+  status                String      @default("pending") // "pending", "processing", "completed", "cancelled", "partial"
+  total                 Float
+  userId                String
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  
+  // Relations
+  user                  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems            OrderItem[]
 
+  @@index([userId])
   @@map("orders")
+}
+
+// OrderItem model for tracking individual items in an order
+model OrderItem {
+  id             String   @id @default(cuid())
+  orderId        String
+  modelNo        String
+  qtyOrdered     Int
+  qtyDelivered   Int      @default(0)
+  qtyPending     Int
+  status         String   @default("pending") // "pending", "partial", "delivered"
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Relations
+  order          Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@map("order_items")
 }
 
 // Enums
@@ -82,4 +109,11 @@ enum OrderStatus {
   processing
   completed
   cancelled
+  partial
+}
+
+enum OrderItemStatus {
+  pending
+  partial
+  delivered
 }

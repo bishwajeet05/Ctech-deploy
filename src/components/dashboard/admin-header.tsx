@@ -1,36 +1,23 @@
-"use client"
+import React from 'react'
+import { UserButton } from "@/components/auth/user-button"
 
-import { signOut } from "next-auth/react"
-import { Button } from "@/components/ui/button"
-import { ThemeSwitcher } from "@/components/theme-switcher"
-
-interface AdminHeaderProps {
-  userName?: string | null
-}
-
-export function AdminHeader({ userName }: AdminHeaderProps) {
+export function AdminHeader() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-lg font-semibold">Cadratec</span>
-          <span className="text-sm text-muted-foreground">Admin Portal</span>
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-14 max-w-screen-2xl items-center">
+        <div className="mr-4 flex">
+          <a className="mr-6 flex items-center space-x-2" href="/">
+            <span className="font-bold inline-block">Admin Dashboard</span>
+          </a>
         </div>
-
-        <div className="flex items-center gap-4">
-          <ThemeSwitcher />
-          
-          <div className="flex items-center gap-2">
-            <span className="text-sm">Welcome, {userName || 'Admin'}</span>
-            <Button
-              variant="outline"
-              onClick={() => signOut({ callbackUrl: '/auth/admin/login' })}
-            >
-              Logout
-            </Button>
+        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+          <div className="w-full flex-1 md:w-auto md:flex-none">
+            <UserButton />
           </div>
         </div>
       </div>
     </header>
   )
-} 
+}
+
+export default AdminHeader 

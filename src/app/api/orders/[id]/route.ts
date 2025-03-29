@@ -1,20 +1,20 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { prisma } from '@/lib/prisma'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { updateOrderSchema } from '@/lib/validations/order'
 
 export async function PATCH(
-  request: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    const body = await request.json()
+    const body = await req.json()
     const validatedData = updateOrderSchema.parse(body)
 
     const order = await prisma.order.findUnique({
@@ -23,24 +23,35 @@ export async function PATCH(
     })
 
     if (!order) {
-      return NextResponse.json({ error: 'Order not found' }, { status: 404 })
+      return new NextResponse('Order not found', { status: 404 })
     }
 
-    if (order.userId !== session.user.id) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    // Allow admins to update any order
+    if (session.user.role !== 'ADMIN' && order.userId !== session.user.id) {
+      return new NextResponse('Forbidden - You do not have permission to update this order', { status: 403 })
     }
 
     const updatedOrder = await prisma.order.update({
       where: { id: params.id },
-      data: validatedData
+      data: {
+        ...validatedData,
+        orderItems: {
+          updateMany: validatedData.orderItems?.map(item => ({
+            where: { modelNo: item.modelNo },
+            data: {
+              status: item.status,
+              qtyOrdered: item.qtyOrdered,
+              qtyDelivered: item.qtyDelivered,
+              qtyPending: item.qtyPending
+            }
+          }))
+        }
+      }
     })
 
     return NextResponse.json(updatedOrder)
   } catch (error) {
     console.error('Error updating order:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return new NextResponse('Internal Server Error', { status: 500 })
   }
 } 

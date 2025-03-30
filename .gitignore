@@ -11,8 +11,8 @@
 # next.js
 /.next/
 /out/
-/deployment/
-/.next/cache/
+/build
+/deployment
 
 # production
 /build
@@ -20,8 +20,6 @@
 # misc
 .DS_Store
 *.pem
-.env*
-!.env.example
 
 # debug
 npm-debug.log*
@@ -29,7 +27,11 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
+.env.development
+.env.test
+.env.production
 
 # vercel
 .vercel

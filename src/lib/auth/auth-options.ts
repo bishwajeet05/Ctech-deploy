@@ -27,13 +27,21 @@ export const authOptions: NextAuthOptions = {
 
         const user = await db.user.findUnique({
           where: { email: credentials.email },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            role: true,
+            image: true,
+            hashedPassword: true,
+          },
         })
 
-        if (!user || !user.password) {
+        if (!user || !user.hashedPassword) {
           throw new Error("Invalid credentials")
         }
 
-        const isValid = await compare(credentials.password, user.password)
+        const isValid = await compare(credentials.password, user.hashedPassword)
 
         if (!isValid) {
           throw new Error("Invalid credentials")
@@ -43,7 +51,8 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           email: user.email,
           name: user.name,
-          role: user.type,
+          role: user.role,
+          image: user.image,
         }
       },
     }),
@@ -52,9 +61,10 @@ export const authOptions: NextAuthOptions = {
     async session({ token, session }) {
       if (token) {
         session.user.id = token.id
-        session.user.name = token.name
-        session.user.email = token.email
+        session.user.name = token.name ?? null
+        session.user.email = token.email ?? ""
         session.user.role = token.role
+        session.user.image = token.image ?? null
       }
 
       return session
@@ -63,6 +73,13 @@ export const authOptions: NextAuthOptions = {
       const dbUser = await db.user.findFirst({
         where: {
           email: token.email ?? undefined,
+        },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          role: true,
+          image: true,
         },
       })
 
@@ -77,7 +94,8 @@ export const authOptions: NextAuthOptions = {
         id: dbUser.id,
         name: dbUser.name,
         email: dbUser.email,
-        role: dbUser.type,
+        role: dbUser.role,
+        image: dbUser.image,
       }
     },
   },

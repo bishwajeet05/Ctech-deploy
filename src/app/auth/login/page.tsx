@@ -38,13 +38,13 @@ export default function LoginPage() {
       })
 
       if (result?.error) {
-        setError("Invalid credentials")
+        setError("Invalid email or password. Please check your credentials and try again.")
         return
       }
 
-      router.push("/dashboard")
+      router.push("/client")
     } catch (error) {
-      setError("Something went wrong")
+      setError("An error occurred while signing in. Please try again later.")
     } finally {
       setLoading(false)
     }
@@ -62,13 +62,13 @@ export default function LoginPage() {
       })
 
       if (result?.error) {
-        setError("Quick login failed")
+        setError("Quick login failed. Please use regular login in production.")
         return
       }
 
-      router.push("/dashboard")
+      router.push("/client")
     } catch (error) {
-      setError("Something went wrong")
+      setError("An error occurred during quick login. Please try again later.")
     } finally {
       setLoading(false)
     }
@@ -164,15 +164,17 @@ export default function LoginPage() {
                   {loading ? "Signing in..." : "Sign in"}
                 </Button>
 
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:bg-white/60 transition-colors"
-                  onClick={quickLogin}
-                  disabled={loading}
-                >
-                  Quick Login (Development)
-                </Button>
+                {process.env.NODE_ENV === "development" && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:bg-white/60 transition-colors"
+                    onClick={quickLogin}
+                    disabled={loading}
+                  >
+                    Quick Login (Development)
+                  </Button>
+                )}
               </div>
             </form>
           </CardContent>

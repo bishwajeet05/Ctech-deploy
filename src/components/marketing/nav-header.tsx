@@ -96,10 +96,10 @@ export const NavHeader = () => {
               <Link href="/auth/login">
                 <Button
                   variant="outline"
-                  className={`bg-transparent tracking-wide ${
+                  className={`bg-transparent tracking-wide transition-colors ${
                     isHeroPage
-                      ? "border-white text-white"
-                      : "border-primary text-primary"
+                      ? "border-white text-white hover:bg-white hover:text-black"
+                      : "border-primary text-primary hover:bg-primary hover:text-white"
                   }`}
                 >
                   {t('nav.login')}
@@ -265,8 +265,8 @@ export const NavHeader = () => {
               <Link href="/auth/login">
                 <Button
                   variant="outline"
-                  className={`bg-transparent transition-all duration-300 tracking-wide ${
-                    shouldBeTransparent
+                  className={`bg-transparent tracking-wide transition-colors ${
+                    isHeroPage
                       ? "border-white text-white hover:bg-white hover:text-black"
                       : "border-primary text-primary hover:bg-primary hover:text-white"
                   }`}

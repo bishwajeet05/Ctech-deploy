@@ -27,21 +27,21 @@ const KanbanView = ({ orders, onViewOrder, orderDetails, selectedOrderId }: Kanb
       {/* Recent Orders Card */}
       <div className="bg-white rounded-xl border border-gray-200">
         <div className="p-6 pb-4">
-          <h2 className="text-lg font-semibold">Recent Orders</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Recent Orders</h2>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-y border-gray-200 text-sm">
-                <th className="text-left font-medium text-gray-500 py-3 px-6">Order</th>
-                <th className="text-left font-medium text-gray-500 py-3 px-6">PO</th>
-                <th className="text-left font-medium text-gray-500 py-3 px-6">Conf. Date</th>
-                <th className="text-left font-medium text-gray-500 py-3 px-6">Delivery Date</th>
-                <th className="text-left font-medium text-gray-500 py-3 px-6">Status</th>
+              <tr className="border-y border-gray-200 text-sm bg-gray-100">
+                <th className="text-left font-medium text-gray-900 py-3 px-6">Order</th>
+                <th className="text-left font-medium text-gray-900 py-3 px-6">PO</th>
+                <th className="text-left font-medium text-gray-900 py-3 px-6">Conf. Date</th>
+                <th className="text-left font-medium text-gray-900 py-3 px-6">Delivery Date</th>
+                <th className="text-left font-medium text-gray-900 py-3 px-6">Status</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white">
               {orders.map((order) => (
                 <tr
                   key={order.order}
@@ -52,7 +52,7 @@ const KanbanView = ({ orders, onViewOrder, orderDetails, selectedOrderId }: Kanb
                   )}
                 >
                   <td className="py-3 px-6">
-                    <span className="font-medium">#{order.orderConfirmation}</span>
+                    <span className="font-medium text-gray-900">#{order.orderConfirmation}</span>
                   </td>
                   <td className="py-3 px-6 text-gray-600">{order.poNumber}</td>
                   <td className="py-3 px-6 text-gray-600">{order.orderConfirmationDate}</td>
@@ -70,7 +70,7 @@ const KanbanView = ({ orders, onViewOrder, orderDetails, selectedOrderId }: Kanb
       {/* Order Details Card */}
       <div className="bg-white rounded-xl border border-gray-200">
         <div className="p-6 pb-4">
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-lg font-semibold text-gray-900">
             {selectedOrderId ? `#${orders.find(o => o.order === selectedOrderId)?.orderConfirmation} Details` : 'Order Details'}
           </h2>
         </div>
@@ -79,23 +79,23 @@ const KanbanView = ({ orders, onViewOrder, orderDetails, selectedOrderId }: Kanb
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-y border-gray-200 text-sm">
-                  <th className="text-left font-medium text-gray-500 py-3 px-6">Model</th>
-                  <th className="text-left font-medium text-gray-500 py-3 px-6">Ordered</th>
-                  <th className="text-left font-medium text-gray-500 py-3 px-6">Delivered</th>
-                  <th className="text-left font-medium text-gray-500 py-3 px-6">Pending</th>
-                  <th className="text-left font-medium text-gray-500 py-3 px-6">Due In</th>
-                  <th className="text-left font-medium text-gray-500 py-3 px-6">Status</th>
+                <tr className="border-y border-gray-200 text-sm bg-gray-100">
+                  <th className="text-left font-medium text-gray-900 py-3 px-6">Model</th>
+                  <th className="text-left font-medium text-gray-900 py-3 px-6">Ordered</th>
+                  <th className="text-left font-medium text-gray-900 py-3 px-6">Delivered</th>
+                  <th className="text-left font-medium text-gray-900 py-3 px-6">Pending</th>
+                  <th className="text-left font-medium text-gray-900 py-3 px-6">Due In</th>
+                  <th className="text-left font-medium text-gray-900 py-3 px-6">Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-white">
                 {orderDetails[selectedOrderId].map((detail, index) => (
-                  <tr key={index} className="border-b border-gray-100">
-                    <td className="py-3 px-6">{detail.modelNo}</td>
-                    <td className="py-3 px-6">{detail.qtyOrdered}</td>
-                    <td className="py-3 px-6">{detail.qtyDelivered}</td>
-                    <td className="py-3 px-6">{detail.qtyPending}</td>
-                    <td className="py-3 px-6">{detail.daysRemainingToOverdue ? `${detail.daysRemainingToOverdue} days` : '- days'}</td>
+                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 text-gray-900">{detail.modelNo}</td>
+                    <td className="py-3 px-6 text-gray-600">{detail.qtyOrdered}</td>
+                    <td className="py-3 px-6 text-gray-600">{detail.qtyDelivered}</td>
+                    <td className="py-3 px-6 text-gray-600">{detail.qtyPending}</td>
+                    <td className="py-3 px-6 text-gray-600">{detail.daysRemainingToOverdue ? `${detail.daysRemainingToOverdue} days` : '- days'}</td>
                     <td className="py-3 px-6">
                       <StatusBadge status={detail.status} />
                     </td>

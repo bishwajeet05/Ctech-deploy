@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import Header from './admin-header';
+import Header from './Header';
 import StatCard from './StatCard';
 import OrderTable from './OrderTable';
 import GridView from './GridView';
@@ -329,125 +329,135 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#F8F9FA]">
-      <Sidebar />
-      <main className="flex-1 pl-4 pt-4 pr-4 pb-4 h-screen">
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm h-[calc(100vh-2rem)]">
-          <div className="p-6 border-b border-gray-200">
-            <Header 
-              title="Orders" 
-              description="Manage phone orders, email invoices, and gather payments with the help of draft orders."
-              actions={
-                <div className="flex items-center gap-3">
-                  <ActionButton 
-                    icon={<RefreshCw className="h-4 w-4" />}
-                    className="bg-[#E0E0E0] hover:bg-[#D0D0D0]"
-                  >
-                    Sync
-                  </ActionButton>
-                  <ActionButton 
-                    variant="primary" 
-                    className="px-[18px] py-[10px] shadow-[0px_4px_8px_rgba(0,0,0,0.1)]"
-                  >
-                    New Order
-                  </ActionButton>
+    <div className="min-h-screen bg-[#F8F9FA]">
+      <div className="flex h-screen overflow-hidden">
+        <Sidebar />
+        <main className="flex-1 overflow-y-auto px-4">
+          <div className="h-full py-4">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm h-full">
+              <div className="p-5 border-b border-gray-200">
+                <Header 
+                  title="Orders" 
+                  description="Manage phone orders, email invoices, and gather payments with the help of draft orders."
+                  actions={
+                    <div className="flex items-center gap-3">
+                      <ActionButton 
+                        icon={<RefreshCw className="h-4 w-4" />}
+                        className="bg-[#EEEEEE] hover:bg-[#E0E0E0] text-gray-700"
+                      >
+                        Sync
+                      </ActionButton>
+                      <ActionButton 
+                        variant="primary" 
+                        className="px-[18px] py-[10px] shadow-[0px_4px_8px_rgba(0,0,0,0.1)] bg-blue-600 hover:bg-blue-700 text-white"
+                      >
+                        New Order
+                      </ActionButton>
+                    </div>
+                  }
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-5">
+                <StatCard
+                  icon={<Package className="h-5 w-5" />}
+                  value="8"
+                  label="Total orders"
+                  className="bg-gradient-to-br from-[#FFF5F0] to-[#FFE4D9] rounded-2xl shadow-sm"
+                  iconColor="bg-white/60"
+                  iconTextColor="text-[#FF5722]"
+                  valueClassName="text-3xl font-bold text-[#FF5722]"
+                  labelClassName="text-sm font-medium text-[#FF5722]/80"
+                />
+                <StatCard
+                  icon={<RefreshCw className="h-5 w-5" />}
+                  value="12"
+                  label="Items Pending"
+                  className="bg-gradient-to-br from-[#FFF0FB] to-[#FFE0F4] rounded-2xl shadow-sm"
+                  iconColor="bg-white/60"
+                  iconTextColor="text-[#E91E63]"
+                  valueClassName="text-3xl font-bold text-[#E91E63]"
+                  labelClassName="text-sm font-medium text-[#E91E63]/80"
+                />
+                <StatCard
+                  icon={<Truck className="h-5 w-5" />}
+                  value="2"
+                  label="Delivered Orders"
+                  className="bg-gradient-to-br from-[#F0F7FF] to-[#E1EFFF] rounded-2xl shadow-sm"
+                  iconColor="bg-white/60"
+                  iconTextColor="text-[#2196F3]"
+                  valueClassName="text-3xl font-bold text-[#2196F3]"
+                  labelClassName="text-sm font-medium text-[#2196F3]/80"
+                />
+                <StatCard
+                  icon={<LineChart className="h-5 w-5" />}
+                  value="2"
+                  label="Partial Orders"
+                  className="bg-gradient-to-br from-[#F0FFF7] to-[#E6FFE6] rounded-2xl shadow-sm"
+                  iconColor="bg-white/60"
+                  iconTextColor="text-[#4CAF50]"
+                  valueClassName="text-3xl font-bold text-[#4CAF50]"
+                  labelClassName="text-sm font-medium text-[#4CAF50]/80"
+                />
+              </div>
+
+              <div className="px-5 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-gray-200">
+                <Tabs
+                  tabs={tabs}
+                  activeTab={activeTab}
+                  onTabChange={setActiveTab}
+                />
+                
+                <div className="flex items-center gap-4">
+                  <SearchBar />
+                  <div className="flex items-center gap-2 bg-[#EEEEEE]/50 p-1 rounded-lg border border-gray-200">
+                    <button
+                      onClick={() => setViewMode('table')}
+                      className={cn(
+                        "p-2 rounded-md transition-colors",
+                        viewMode === 'table' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700 hover:bg-[#EEEEEE]"
+                      )}
+                    >
+                      <Layout className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => setViewMode('kanban')}
+                      className={cn(
+                        "p-2 rounded-md transition-colors",
+                        viewMode === 'kanban' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700 hover:bg-[#EEEEEE]"
+                      )}
+                    >
+                      <Columns className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => setViewMode('grid')}
+                      className={cn(
+                        "p-2 rounded-md transition-colors",
+                        viewMode === 'grid' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700 hover:bg-[#EEEEEE]"
+                      )}
+                    >
+                      <LayoutGrid className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
-              }
-            />
-          </div>
+              </div>
 
-          <div className="grid grid-cols-4 gap-6 p-6">
-            <StatCard
-              icon={<Package className="h-5 w-5" />}
-              value="2"
-              label="Total orders"
-              className="bg-gradient-to-br from-[#FFF5F0] to-[#FFE4D9] rounded-2xl shadow-sm"
-              iconColor="bg-white/60"
-              iconTextColor="text-[#FF5722]"
-              valueClassName="text-2xl font-semibold text-[#404040]"
-              labelClassName="text-base font-medium text-[#404040]"
-            />
-            <StatCard
-              icon={<RefreshCw className="h-5 w-5" />}
-              value="3"
-              label="Items Returned"
-              className="bg-gradient-to-br from-[#FFF0FB] to-[#FFE0F4] rounded-2xl shadow-sm"
-              iconColor="bg-white/60"
-              iconTextColor="text-[#E91E63]"
-              valueClassName="text-2xl font-semibold text-[#404040]"
-              labelClassName="text-base font-medium text-[#404040]"
-            />
-            <StatCard
-              icon={<Truck className="h-5 w-5" />}
-              value="2"
-              label="Delivered Orders Over Time"
-              className="bg-gradient-to-br from-[#F0F7FF] to-[#E1EFFF] rounded-2xl shadow-sm"
-              iconColor="bg-white/60"
-              iconTextColor="text-[#2196F3]"
-            />
-            <StatCard
-              icon={<LineChart className="h-5 w-5" />}
-              value="1"
-              label="Order Trends Over Time"
-              className="bg-gradient-to-br from-[#F0FFF7] to-[#E6FFE6] rounded-2xl shadow-sm"
-              iconColor="bg-white/60"
-              iconTextColor="text-[#4CAF50]"
-            />
-          </div>
-
-          <div className="px-6 py-4 flex items-center justify-between border-t border-gray-200">
-            <Tabs
-              tabs={tabs}
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-            />
-            
-            <div className="flex items-center gap-4">
-              <SearchBar />
-              <div className="flex items-center gap-2 bg-gray-50/80 p-1 rounded-lg border border-gray-200">
-                <button
-                  onClick={() => setViewMode('table')}
-                  className={cn(
-                    "p-2 rounded-md transition-colors",
-                    viewMode === 'table' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-600 hover:text-gray-900 hover:bg-white/60"
-                  )}
-                >
-                  <Layout className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => setViewMode('kanban')}
-                  className={cn(
-                    "p-2 rounded-md transition-colors",
-                    viewMode === 'kanban' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-600 hover:text-gray-900 hover:bg-white/60"
-                  )}
-                >
-                  <Columns className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={cn(
-                    "p-2 rounded-md transition-colors",
-                    viewMode === 'grid' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-600 hover:text-gray-900 hover:bg-white/60"
-                  )}
-                >
-                  <LayoutGrid className="h-4 w-4" />
-                </button>
+              <div className="px-5 py-3 border-t border-gray-200 overflow-x-auto">
+                <div className="min-w-full">
+                  {renderView()}
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="px-6 py-4 border-t border-gray-200 flex-1 overflow-auto">
-            {renderView()}
-          </div>
-        </div>
-
-        <OrderDetailsModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          orderDetails={modalOrderId ? sampleOrderDetails[modalOrderId] : []}
-          orderNumber={modalOrderNo || ''}
-        />
-      </main>
+          <OrderDetailsModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            orderDetails={modalOrderId ? sampleOrderDetails[modalOrderId] : []}
+            orderNumber={modalOrderNo || ''}
+          />
+        </main>
+      </div>
     </div>
   );
 };

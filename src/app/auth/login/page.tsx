@@ -102,7 +102,7 @@ export default function LoginPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-white/20 pointer-events-none" />
           
           <CardHeader className="space-y-1 relative">
-            <CardTitle className="text-2xl font-light tracking-tight">Welcome back</CardTitle>
+            <CardTitle className="text-2xl font-medium tracking-tight text-gray-900">Welcome back</CardTitle>
             <CardDescription className="text-neutral-600">
               Sign in to your account
             </CardDescription>
@@ -168,7 +168,7 @@ export default function LoginPage() {
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:bg-white/60 transition-colors"
+                    className="w-full bg-neutral-900 hover:bg-neutral-800 text-white transition-colors"
                     onClick={quickLogin}
                     disabled={loading}
                   >

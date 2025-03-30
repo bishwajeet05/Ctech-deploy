@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import Header from './Header';
 import StatCard from './StatCard';
 import OrderTable from './OrderTable';
 import GridView from './GridView';
@@ -336,26 +335,28 @@ const Dashboard = () => {
           <div className="h-full py-4">
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm h-full">
               <div className="p-5 border-b border-gray-200">
-                <Header 
-                  title="Orders" 
-                  description="Manage phone orders, email invoices, and gather payments with the help of draft orders."
-                  actions={
-                    <div className="flex items-center gap-3">
-                      <ActionButton 
-                        icon={<RefreshCw className="h-4 w-4" />}
-                        className="bg-[#EEEEEE] hover:bg-[#E0E0E0] text-gray-700"
-                      >
-                        Sync
-                      </ActionButton>
-                      <ActionButton 
-                        variant="primary" 
-                        className="px-[18px] py-[10px] shadow-[0px_4px_8px_rgba(0,0,0,0.1)] bg-blue-600 hover:bg-blue-700 text-white"
-                      >
-                        New Order
-                      </ActionButton>
-                    </div>
-                  }
-                />
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-2xl font-semibold text-gray-900">Orders</h1>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Manage phone orders, email invoices, and gather payments with the help of draft orders.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <ActionButton 
+                      icon={<RefreshCw className="h-4 w-4" />}
+                      className="bg-[#EEEEEE] hover:bg-[#E0E0E0] text-gray-700"
+                    >
+                      Sync
+                    </ActionButton>
+                    <ActionButton 
+                      variant="primary" 
+                      className="px-[18px] py-[10px] shadow-[0px_4px_8px_rgba(0,0,0,0.1)] bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                      New Order
+                    </ActionButton>
+                  </div>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-5">

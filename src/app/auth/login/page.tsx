@@ -34,15 +34,21 @@ export default function LoginPage() {
         email,
         password,
         redirect: false,
+        callbackUrl: "/client"
       })
 
       if (result?.error) {
-        setError("Invalid email or password. Please check your credentials and try again.")
+        setError(result.error)
         return
       }
 
-      router.push("/client")
+      if (result?.url) {
+        router.push(result.url)
+      } else {
+        router.push("/client")
+      }
     } catch (error) {
+      console.error("Login error:", error)
       setError("An error occurred while signing in. Please try again later.")
     } finally {
       setLoading(false)

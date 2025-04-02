@@ -26,11 +26,12 @@ declare module "next-auth" {
 
 export const authOptions: NextAuthOptions = {
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   pages: {
-    signIn: "/login",
-    error: "/auth/error"
+    signIn: "/auth/login",
+    error: "/auth/error",
   },
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -41,11 +42,11 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        try {
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error("Invalid credentials");
-          }
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Please enter your email and password")
+        }
 
+        try {
           const user = await prisma.user.findUnique({
             where: {
               email: credentials.email
@@ -58,16 +59,16 @@ export const authOptions: NextAuthOptions = {
               role: true,
               image: true
             }
-          });
+          })
 
-          if (!user?.hashedPassword) {
-            throw new Error("Invalid credentials");
+          if (!user || !user.hashedPassword) {
+            throw new Error("No user found with this email")
           }
 
-          const isValid = await bcrypt.compare(credentials.password, user.hashedPassword);
+          const isValid = await bcrypt.compare(credentials.password, user.hashedPassword)
 
           if (!isValid) {
-            throw new Error("Invalid credentials");
+            throw new Error("Invalid password")
           }
 
           return {
@@ -76,10 +77,10 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             image: user.image,
             role: user.role as UserType
-          };
+          }
         } catch (error) {
-          console.error("Auth error:", error);
-          throw error;
+          console.error("Auth error:", error)
+          throw error
         }
       }
     })
@@ -116,5 +117,6 @@ export const authOptions: NextAuthOptions = {
         secure: process.env.NODE_ENV === 'production'
       }
     }
-  }
+  },
+  debug: process.env.NODE_ENV === 'development',
 } 

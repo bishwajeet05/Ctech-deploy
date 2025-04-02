@@ -280,3 +280,41 @@ For support:
 - [Radix UI](https://www.radix-ui.com/)
 - [NextAuth.js](https://next-auth.js.org/)
 - [Prisma](https://www.prisma.io/)
+
+## Environment Setup
+
+1. Copy the example environment file:
+```bash
+cp .env.example .env
+```
+
+2. Update the `.env` file with your actual values:
+   - Get your database URL from your Supabase project settings
+   - Generate a secure NEXTAUTH_SECRET using: `openssl rand -base64 32`
+   - Set the appropriate URLs for your environment
+
+3. Required Environment Variables:
+   - `DATABASE_URL`: Your PostgreSQL database URL (from Supabase)
+   - `NEXTAUTH_SECRET`: A secure random string for NextAuth.js
+   - `NEXTAUTH_URL`: Your application URL
+   - `JWT_SECRET`: A secure random string for JWT signing
+   - Other variables as shown in `.env.example`
+
+4. Never commit your `.env` file to version control
+
+## Development
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Generate Prisma client:
+```bash
+npx prisma generate
+```
+
+3. Run the development server:
+```bash
+npm run dev
+```

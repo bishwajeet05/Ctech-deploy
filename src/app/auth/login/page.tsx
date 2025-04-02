@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/card"
 import Link from "next/link"
 import { NavHeader } from "@/components/marketing/nav-header"
-import Image from "next/image"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -45,30 +44,6 @@ export default function LoginPage() {
       router.push("/client")
     } catch (error) {
       setError("An error occurred while signing in. Please try again later.")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function quickLogin() {
-    setLoading(true)
-    setError(null)
-
-    try {
-      const result = await signIn("credentials", {
-        email: "user@cadratec.com",
-        password: "user123",
-        redirect: false,
-      })
-
-      if (result?.error) {
-        setError("Quick login failed. Please use regular login in production.")
-        return
-      }
-
-      router.push("/client")
-    } catch (error) {
-      setError("An error occurred during quick login. Please try again later.")
     } finally {
       setLoading(false)
     }
@@ -163,18 +138,6 @@ export default function LoginPage() {
                 >
                   {loading ? "Signing in..." : "Sign in"}
                 </Button>
-
-                {process.env.NODE_ENV === "development" && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full bg-neutral-900 hover:bg-neutral-800 text-white transition-colors"
-                    onClick={quickLogin}
-                    disabled={loading}
-                  >
-                    Quick Login (Development)
-                  </Button>
-                )}
               </div>
             </form>
           </CardContent>

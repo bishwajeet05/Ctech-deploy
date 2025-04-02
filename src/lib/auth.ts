@@ -43,10 +43,16 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
+          console.error("Missing credentials")
           throw new Error("Please enter your email and password")
         }
 
         try {
+          console.log("Attempting database connection...")
+          await prisma.$connect()
+          console.log("Database connected successfully")
+
+          console.log("Looking up user:", credentials.email)
           const user = await prisma.user.findUnique({
             where: {
               email: credentials.email
@@ -62,15 +68,19 @@ export const authOptions: NextAuthOptions = {
           })
 
           if (!user || !user.hashedPassword) {
+            console.error("No user found:", credentials.email)
             throw new Error("No user found with this email")
           }
 
+          console.log("Verifying password...")
           const isValid = await bcrypt.compare(credentials.password, user.hashedPassword)
 
           if (!isValid) {
+            console.error("Invalid password for user:", credentials.email)
             throw new Error("Invalid password")
           }
 
+          console.log("Authentication successful for user:", credentials.email)
           return {
             id: user.id,
             email: user.email,
@@ -79,8 +89,10 @@ export const authOptions: NextAuthOptions = {
             role: user.role as UserType
           }
         } catch (error) {
-          console.error("Auth error:", error)
+          console.error("Authentication error:", error)
           throw error
+        } finally {
+          await prisma.$disconnect()
         }
       }
     })
@@ -118,5 +130,5 @@ export const authOptions: NextAuthOptions = {
       }
     }
   },
-  debug: process.env.NODE_ENV === 'development',
+  debug: true, // Enable debug logs in both development and production
 } 

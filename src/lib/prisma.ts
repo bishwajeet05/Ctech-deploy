@@ -15,8 +15,46 @@ const mockPrismaClient = {
     create: () => Promise.resolve(null),
     update: () => Promise.resolve(null),
     delete: () => Promise.resolve(null),
+    count: () => Promise.resolve(0),
+    upsert: () => Promise.resolve(null),
   },
-  // Add other models as needed
+  order: {
+    findMany: () => Promise.resolve([]),
+    findUnique: () => Promise.resolve(null),
+    create: () => Promise.resolve(null),
+    update: () => Promise.resolve(null),
+    delete: () => Promise.resolve(null),
+    count: () => Promise.resolve(0),
+  },
+  orderItem: {
+    findMany: () => Promise.resolve([]),
+    findUnique: () => Promise.resolve(null),
+    create: () => Promise.resolve(null),
+    update: () => Promise.resolve(null),
+    delete: () => Promise.resolve(null),
+    count: () => Promise.resolve(0),
+  },
+  document: {
+    findMany: () => Promise.resolve([]),
+    findUnique: () => Promise.resolve(null),
+    create: () => Promise.resolve(null),
+    update: () => Promise.resolve(null),
+    delete: () => Promise.resolve(null),
+    count: () => Promise.resolve(0),
+  },
+  session: {
+    findMany: () => Promise.resolve([]),
+    findUnique: () => Promise.resolve(null),
+    create: () => Promise.resolve(null),
+    update: () => Promise.resolve(null),
+    delete: () => Promise.resolve(null),
+    count: () => Promise.resolve(0),
+  },
+  _: {
+    user: {
+      count: () => Promise.resolve(0),
+    },
+  },
 } as unknown as PrismaClient
 
 const prismaClientSingleton = () => {

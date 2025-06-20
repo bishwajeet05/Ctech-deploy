@@ -1,59 +1,54 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
-    // Test database connection first
-    await prisma.$connect();
-    
     // Log the query attempt
-    console.log('Attempting to fetch clients...');
+    console.log('Attempting to fetch users...');
 
-    const clients = await prisma.client.findMany({
+    const users = await prisma.user.findMany({
       select: {
         id: true,
         name: true,
         email: true,
-        phone: true,
-        companyName: true,
-        isActive: true,
+        role: true,
         createdAt: true,
-        lastLoginAt: true,
-      },
-      where: {
-        deletedAt: null,
       },
       orderBy: {
         createdAt: 'desc'
       }
     });
 
-    console.log('Fetched clients count:', clients.length);
+    console.log('Fetched users count:', users.length);
 
-    const formattedClients = clients.map(client => ({
-      id: client.id.toString(),
-      name: client.name,
-      email: client.email,
-      location: client.companyName || 'N/A',
-      flag: '🏢',
-      status: client.isActive ? 'Active' : 'Inactive',
-      balance: 0,
+    const formattedUsers = users.map(user => ({
+      id: user.id,
+      name: user.name || 'N/A',
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
     }));
 
-    return NextResponse.json(formattedClients);
+    return NextResponse.json(formattedUsers);
 
   } catch (error) {
     // Log the full error
     console.error("Detailed error:", error);
 
+    // If this is a build-time static generation, return empty data
+    if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'build') {
+      console.log('Returning empty data during build');
+      return NextResponse.json([]);
+    }
+
     return NextResponse.json(
       { 
-        error: "Failed to fetch clients", 
+        error: "Failed to fetch users", 
         details: error instanceof Error ? error.message : 'Unknown error'
       }, 
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 } 

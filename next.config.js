@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   images: {
     domains: [
       'placehold.co',
@@ -8,7 +9,8 @@ const nextConfig = {
       'cardatec.sarptechnologies.com',
       'ngrok.io',
       'ngrok-free.app',
-      '13.232.100.77'  // Add your EC2 IP
+      '13.232.100.77',  // Add your EC2 IP
+      'images.unsplash.com'
     ],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
@@ -46,6 +48,9 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     baseUrl: process.env.NODE_ENV === 'production' ? 'http://13.232.100.77' : 'http://localhost:3000',
+  },
+  env: {
+    SKIP_DB_DURING_BUILD: process.env.NODE_ENV === 'production' ? 'true' : 'false',
   },
 }
 

@@ -1,28 +1,51 @@
 import { PrismaClient } from '@prisma/client'
 
-declare global {
-  var prisma: PrismaClient | undefined
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
 }
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is not set')
-}
+// Create a mock Prisma client for build time
+const mockPrismaClient = {
+  $connect: () => Promise.resolve(),
+  $disconnect: () => Promise.resolve(),
+  user: {
+    findMany: () => Promise.resolve([]),
+    findUnique: () => Promise.resolve(null),
+    findFirst: () => Promise.resolve(null),
+    create: () => Promise.resolve(null),
+    update: () => Promise.resolve(null),
+    delete: () => Promise.resolve(null),
+  },
+  // Add other models as needed
+} as unknown as PrismaClient
 
 const prismaClientSingleton = () => {
+  // During build, return the mock client
+  if (process.env.SKIP_DB_DURING_BUILD === 'true') {
+    console.log('Using mock Prisma client during build')
+    return mockPrismaClient
+  }
+
+  if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL environment variable is not set')
+  }
+
   return new PrismaClient({
     datasources: {
       db: {
         url: process.env.DATABASE_URL
       }
     },
-    log: ['query', 'info', 'warn', 'error']
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error']
   })
 }
 
-export const prisma = globalThis.prisma ?? prismaClientSingleton()
+export const prisma =
+  globalForPrisma.prisma ??
+  prismaClientSingleton()
 
 if (process.env.NODE_ENV !== 'production') {
-  globalThis.prisma = prisma
+  globalForPrisma.prisma = prisma
 }
 
 // Test the connection

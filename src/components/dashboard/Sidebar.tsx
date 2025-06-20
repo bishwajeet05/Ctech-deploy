@@ -48,9 +48,13 @@ const SidebarItem = ({
   );
 };
 
-const Sidebar = () => {
+type SidebarProps = {
+  activePage: string;
+  setActivePage: (page: string) => void;
+};
+
+const Sidebar = ({ activePage, setActivePage }: SidebarProps) => {
   const router = useRouter();
-  const [activePage, setActivePage] = React.useState("Orders");
   
   const handleLogout = async () => {
     try {
@@ -82,12 +86,6 @@ const Sidebar = () => {
       <div className="px-3 py-2 flex-1 overflow-auto">
         <nav>
           <ul className="space-y-1">
-            <SidebarItem 
-              icon={LayoutDashboard} 
-              label="Overview" 
-              active={activePage === "Overview"}
-              onClick={() => setActivePage("Overview")}
-            />
             <SidebarItem 
               icon={ClipboardList} 
               label="Orders" 

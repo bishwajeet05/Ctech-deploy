@@ -3,15 +3,16 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
+    // Test database connection
     await prisma.$connect();
     
-    // Try a simple query
-    const count = await prisma.client.count();
+    // Try a simple query to verify connection
+    const userCount = await prisma.user.count();
     
     return NextResponse.json({ 
       success: true, 
       message: 'Database connection successful',
-      clientCount: count 
+      userCount: userCount
     });
     
   } catch (error) {

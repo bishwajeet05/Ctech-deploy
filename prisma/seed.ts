@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcryptjs'
+import * as bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
@@ -12,38 +12,34 @@ async function main() {
     await prisma.session.deleteMany()
     await prisma.user.deleteMany()
 
-    // Create users with known passwords
-    const adminPassword = await bcrypt.hash('admin123', 12)
-    const userPassword = await bcrypt.hash('user123', 12)
-    const testPassword = await bcrypt.hash('test123', 12)
-
     // Create admin user
-    const adminUser = await prisma.user.create({
-      data: {
-        id: 'cm7w3i3as0000tkxwj5t6boqc',
-        name: 'Admin User',
+    const adminPassword = await bcrypt.hash('admin123', 12)
+    const admin = await prisma.user.upsert({
+      where: { email: 'admin@cadratec.com' },
+      update: {},
+      create: {
         email: 'admin@cadratec.com',
+        name: 'Admin User',
         hashedPassword: adminPassword,
         role: 'ADMIN',
-        createdAt: new Date(),
-        updatedAt: new Date(),
       },
     })
 
     // Create demo user
-    const demoUser = await prisma.user.create({
-      data: {
-        id: 'cm7w3i3ir0001tkxw4scckndx',
-        name: 'Demo User',
+    const userPassword = await bcrypt.hash('user123', 12)
+    const user = await prisma.user.upsert({
+      where: { email: 'user@cadratec.com' },
+      update: {},
+      create: {
         email: 'user@cadratec.com',
+        name: 'Demo User',
         hashedPassword: userPassword,
         role: 'USER',
-        createdAt: new Date(),
-        updatedAt: new Date(),
       },
     })
 
     // Create test user
+    const testPassword = await bcrypt.hash('test123', 12)
     const testUser = await prisma.user.create({
       data: {
         id: 'test-user-1',
@@ -66,7 +62,7 @@ async function main() {
           url: '/documents/catalog-2024.pdf',
           type: 'pdf',
           size: 2048576,
-          userId: demoUser.id,
+          userId: user.id,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -77,7 +73,7 @@ async function main() {
           url: '/documents/tech-specs.pdf',
           type: 'pdf',
           size: 1048576,
-          userId: demoUser.id,
+          userId: user.id,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -91,7 +87,7 @@ async function main() {
         number: 'ORD-2024-001',
         status: 'completed',
         total: 1500,
-        userId: demoUser.id,
+        userId: user.id,
         createdAt: new Date(),
         updatedAt: new Date(),
         orderConfirmation: 'AU-00274',
@@ -107,7 +103,7 @@ async function main() {
         number: 'ORD-2024-002',
         status: 'partial',
         total: 2750.5,
-        userId: demoUser.id,
+        userId: user.id,
         createdAt: new Date(),
         updatedAt: new Date(),
         orderConfirmation: 'AU-00275',

@@ -8,13 +8,10 @@ if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL environment variable is not set')
 }
 
-// Use connection pooling in production
-const databaseUrl = process.env.DATABASE_URL.replace(':5432', ':6543')
-
 export const prisma = globalForPrisma.prisma ?? new PrismaClient({
   datasources: {
     db: {
-      url: databaseUrl
+      url: process.env.DATABASE_URL
     }
   },
   log: ['query', 'info', 'warn', 'error']
@@ -23,8 +20,8 @@ export const prisma = globalForPrisma.prisma ?? new PrismaClient({
 // Test the connection
 prisma.$connect()
   .then(() => {
-    console.log('Successfully connected to database using pooled connection')
-    console.log('Connection URL:', databaseUrl.replace(/postgresql:\/\/postgres:(.*)@/, 'postgresql://postgres:****@'))
+    console.log('Successfully connected to database')
+    console.log('Connection URL:', process.env.DATABASE_URL.replace(/postgresql:\/\/postgres:(.*)@/, 'postgresql://postgres:****@'))
   })
   .catch((e) => {
     console.error('Failed to connect to database:', e)

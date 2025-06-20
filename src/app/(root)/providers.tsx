@@ -3,7 +3,6 @@
 import { PropsWithChildren } from "react"
 import { ThemeProvider } from "next-themes"
 import { SessionProvider } from "next-auth/react"
-import { Toaster } from "sonner"
 
 export function Providers({ children }: PropsWithChildren) {
   return (
@@ -14,7 +13,6 @@ export function Providers({ children }: PropsWithChildren) {
         enableSystem
         disableTransitionOnChange
       >
-        <Toaster position="bottom-right" />
         {children}
       </ThemeProvider>
     </SessionProvider>

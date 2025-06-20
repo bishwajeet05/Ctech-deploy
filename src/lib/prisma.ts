@@ -1,33 +1,39 @@
 import { PrismaClient } from '@prisma/client'
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
+declare global {
+  var prisma: PrismaClient | undefined
 }
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL environment variable is not set')
 }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL
-    }
-  },
-  log: ['query', 'info', 'warn', 'error']
-})
+const prismaClientSingleton = () => {
+  return new PrismaClient({
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL
+      }
+    },
+    log: ['query', 'info', 'warn', 'error']
+  })
+}
+
+export const prisma = globalThis.prisma ?? prismaClientSingleton()
+
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.prisma = prisma
+}
 
 // Test the connection
 prisma.$connect()
   .then(() => {
     console.log('Successfully connected to database')
-    console.log('Connection URL:', process.env.DATABASE_URL.replace(/postgresql:\/\/postgres:(.*)@/, 'postgresql://postgres:****@'))
+    console.log('Connection URL:', process.env.DATABASE_URL.replace(/postgresql:\/\/[^:]+:[^@]+@/, 'postgresql://****:****@'))
   })
   .catch((e) => {
     console.error('Failed to connect to database:', e)
-    throw e
+    process.exit(1)
   })
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
 export default prisma 

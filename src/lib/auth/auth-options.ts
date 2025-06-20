@@ -1,8 +1,16 @@
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
+import { User } from "next-auth"
+import { JWT } from "next-auth/jwt"
 
 import { db } from "@/lib/db"
+
+type UserType = 'ADMIN' | 'USER'
+
+interface CustomUser extends User {
+  role: UserType;
+}
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -47,29 +55,40 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid credentials")
         }
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-          image: user.image,
-        }
+        return user as CustomUser
       },
     }),
   ],
+  cookies: {
+    sessionToken: {
+      name: 'next-auth.session-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: false // Always false since we're using HTTP
+      }
+    }
+  },
   callbacks: {
     async session({ token, session }) {
       if (token) {
-        session.user.id = token.id
-        session.user.name = token.name ?? null
-        session.user.email = token.email ?? ""
-        session.user.role = token.role
-        session.user.image = token.image ?? null
+        session.user.id = token.id as string
+        session.user.name = token.name as string | null
+        session.user.email = token.email as string
+        session.user.role = token.role as UserType
+        session.user.image = token.image as string | null
       }
 
       return session
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user }): Promise<JWT> {
+      if (user) {
+        token.id = user.id
+        token.role = (user as CustomUser).role
+        return token
+      }
+
       const dbUser = await db.user.findFirst({
         where: {
           email: token.email ?? undefined,
@@ -84,17 +103,15 @@ export const authOptions: NextAuthOptions = {
       })
 
       if (!dbUser) {
-        if (user) {
-          token.id = user.id
-        }
         return token
       }
 
       return {
+        ...token,
         id: dbUser.id,
         name: dbUser.name,
         email: dbUser.email,
-        role: dbUser.role,
+        role: dbUser.role as UserType,
         image: dbUser.image,
       }
     },

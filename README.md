@@ -318,3 +318,5 @@ npx prisma generate
 ```bash
 npm run dev
 ```
+#   C T e c h - 1 9  
+ 

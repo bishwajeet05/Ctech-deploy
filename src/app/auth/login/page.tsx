@@ -34,7 +34,7 @@ export default function LoginPage() {
         email,
         password,
         redirect: false,
-        callbackUrl: "/client"
+        callbackUrl: "/dashboard"
       })
 
       if (result?.error) {
@@ -42,10 +42,8 @@ export default function LoginPage() {
         return
       }
 
-      if (result?.url) {
-        router.push(result.url)
-      } else {
-        router.push("/client")
+      if (result?.ok) {
+        window.location.href = "/dashboard"
       }
     } catch (error) {
       console.error("Login error:", error)
@@ -72,8 +70,8 @@ export default function LoginPage() {
         
         {/* Subtle Grid Pattern */}
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(#00000009 1px, transparent 1px)`,
-          backgroundSize: '24px 24px'
+          backgroundImage: "radial-gradient(#00000009 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
         }} />
       </div>
 
@@ -125,15 +123,6 @@ export default function LoginPage() {
                   required
                   className="w-full rounded-md border border-neutral-200/80 bg-white/60 px-3 py-2 text-sm text-black ring-offset-background placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 focus-visible:border-neutral-300"
                 />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
-                >
-                  Forgot password?
-                </Link>
               </div>
 
               <div className="space-y-4">

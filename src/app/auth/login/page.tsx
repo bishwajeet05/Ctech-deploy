@@ -30,20 +30,27 @@ export default function LoginPage() {
     const password = formData.get("password") as string
 
     try {
+      console.log("Attempting to sign in with email:", email);
       const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
         callbackUrl: "/dashboard"
-      })
+      });
+
+      console.log("signIn result:", result);
 
       if (result?.error) {
-        setError(result.error)
-        return
+        console.error("signIn error:", result.error);
+        setError(result.error);
+        return;
       }
 
       if (result?.ok) {
-        window.location.href = "/dashboard"
+        console.log("Login successful, redirecting to /dashboard");
+        window.location.href = "/dashboard";
+      } else {
+        console.warn("Login was not ok, but no error was provided. Result:", result);
       }
     } catch (error) {
       console.error("Login error:", error)

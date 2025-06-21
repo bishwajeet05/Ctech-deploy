@@ -81,13 +81,15 @@ export const authOptions: NextAuthOptions = {
           }
 
           console.log("Authentication successful for user:", credentials.email)
-          return {
+          const authorizedUser = {
             id: user.id,
             email: user.email,
             name: user.name,
             image: user.image,
             role: user.role as UserType
-          }
+          };
+          console.log("Authorized user object:", authorizedUser);
+          return authorizedUser;
         } catch (error) {
           console.error("Authentication error:", error)
           throw error
@@ -99,6 +101,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
+      console.log("JWT callback triggered. User:", user, "Token:", token);
       if (user) {
         token.id = user.id
         token.email = user.email
@@ -106,9 +109,11 @@ export const authOptions: NextAuthOptions = {
         token.image = user.image
         token.role = user.role as UserType
       }
+      console.log("Returning JWT token:", token);
       return token
     },
     async session({ session, token }) {
+      console.log("Session callback triggered. Session:", session, "Token:", token);
       if (token && session.user) {
         session.user.id = token.id as string
         session.user.email = token.email as string
@@ -116,6 +121,7 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.image as string | null
         session.user.role = token.role as UserType
       }
+      console.log("Returning session:", session);
       return session
     }
   },

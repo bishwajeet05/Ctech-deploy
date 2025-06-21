@@ -1,6 +1,9 @@
-import { prisma } from "@/lib/prisma";
+import { db } from "@/lib/db";
+import { users } from "@/lib/db/schema";
 import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
+import { eq } from "drizzle-orm";
+import { nanoid } from "nanoid";
 
 export const dynamic = 'force-dynamic';
 
@@ -18,28 +21,22 @@ export async function POST() {
     }
 
     const hashedPassword = await hash("password123", 10);
-    const users = await Promise.all([
-      prisma.user.upsert({
-        where: { email: "user@example.com" },
-        update: {},
-        create: {
-          email: "user@example.com",
-          hashedPassword,
-          role: "USER",
-        },
-      }),
-      prisma.user.upsert({
-        where: { email: "admin@example.com" },
-        update: {},
-        create: {
-          email: "admin@example.com",
-          hashedPassword,
-          role: "ADMIN",
-        },
-      }),
+    async function upsertUser(email, hashedPassword, role) {
+      const existing = await db.select().from(users).where(eq(users.email, email)).then(r => r[0]);
+      if (existing) return existing;
+      return await db.insert(users).values({
+        id: nanoid(),
+        email,
+        hashedPassword,
+        role,
+      }).returning().then(r => r[0]);
+    }
+    const usersArr = await Promise.all([
+      upsertUser("user@example.com", hashedPassword, "USER"),
+      upsertUser("admin@example.com", hashedPassword, "ADMIN"),
     ]);
 
-    return NextResponse.json({ users });
+    return NextResponse.json({ users: usersArr });
   } catch (error) {
     console.error("Error creating test users:", error);
     return NextResponse.json(

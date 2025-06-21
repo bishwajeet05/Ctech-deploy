@@ -1,12 +1,14 @@
-import { prisma } from "@/lib/prisma";
+import { db } from "@/lib/db";
+import { users } from "@/lib/db/schema";
 import { NextResponse } from "next/server";
+import { count } from "drizzle-orm";
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    // Test database connection first
-    await prisma.$connect();
+    // Test database connection by running a simple query
+    const userCount = await db.select({ value: count() }).from(users).then(r => r[0]?.value ?? 0);
     console.log('Successfully connected to database');
     console.log('Connection URL:', process.env.DATABASE_URL?.replace(/(.*?:\/\/.*?:).*?@/, '$1****:****@'));
 
@@ -15,8 +17,6 @@ export async function GET() {
       return NextResponse.json({ userCount: 0, message: 'Mock data during build' });
     }
 
-    // Count users
-    const userCount = await prisma.user.count();
     return NextResponse.json({ userCount });
 
   } catch (error) {

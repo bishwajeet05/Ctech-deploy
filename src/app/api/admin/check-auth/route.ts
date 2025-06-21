@@ -1,15 +1,14 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
+import { db } from '@/lib/db'
+import { users } from '@/lib/db/schema'
+import { eq } from 'drizzle-orm'
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
     const { email } = body
 
-    const user = await prisma.user.findUnique({
-      where: { email },
-      select: { role: true }
-    })
+    const user = await db.select({ role: users.role }).from(users).where(eq(users.email, email)).then(r => r[0])
 
     const isAdmin = user?.role === 'ADMIN'
 

@@ -1,16 +1,15 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { db } from '@/lib/db'
+import { users as usersTable } from '@/lib/db/schema'
 
 export async function GET() {
   try {
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        email: true,
-        role: true,
-        createdAt: true,
-      }
-    })
+    const users = await db.select({
+      id: usersTable.id,
+      email: usersTable.email,
+      role: usersTable.role,
+      createdAt: usersTable.createdAt,
+    }).from(usersTable)
 
     return NextResponse.json({ users })
   } catch (error) {

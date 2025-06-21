@@ -1,6 +1,8 @@
-import { prisma } from "@/lib/prisma";
+import { db } from "@/lib/db";
+import { users } from "@/lib/db/schema";
 import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
+import { nanoid } from "nanoid";
 
 export const dynamic = 'force-dynamic';
 
@@ -17,13 +19,12 @@ export async function POST() {
     }
 
     const hashedPassword = await hash("password123", 10);
-    const user = await prisma.user.create({
-      data: {
-        email: "test@example.com",
-        hashedPassword,
-        role: "USER",
-      },
-    });
+    const user = await db.insert(users).values({
+      id: nanoid(),
+      email: "test@example.com",
+      hashedPassword,
+      role: "USER",
+    }).returning().then(r => r[0]);
 
     return NextResponse.json(user);
   } catch (error) {

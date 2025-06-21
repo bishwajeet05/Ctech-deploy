@@ -14,7 +14,7 @@ model User {
   emailVerified  DateTime?
   image          String?
   hashedPassword String
-  role           String     @default("USER")
+  role           UserType   @default(USER)
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 

@@ -318,5 +318,10 @@ npx prisma generate
 ```bash
 npm run dev
 ```
-#   C T e c h - 1 9  
+
+## ⚠️ Dashboard Authentication Removed
+
+As of [DATE], the dashboard page (`/dashboard`) no longer requires authentication. Session cookie checks and login protection have been removed for testing and ease of access. Anyone can access the dashboard without logging in.
+#   C T e c h - 1 9 
+ 
  

@@ -1,8 +1,10 @@
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
-import { prisma } from "./prisma"
-import { UserType } from "@prisma/client"
+import { db } from "@/lib/db"
+import { users } from "@/lib/db/schema"
+import { eq } from "drizzle-orm"
+import type { UserRole } from "@/lib/db/schema"
 
 declare module "next-auth" {
   interface User {
@@ -10,7 +12,7 @@ declare module "next-auth" {
     email: string
     name: string | null
     image: string | null
-    role: UserType
+    role: UserRole
   }
 
   interface Session {
@@ -19,7 +21,7 @@ declare module "next-auth" {
       email: string
       name: string | null
       image: string | null
-      role: UserType
+      role: UserRole
     }
   }
 }
@@ -48,24 +50,13 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
-          console.log("Attempting database connection...")
-          await prisma.$connect()
-          console.log("Database connected successfully")
-
           console.log("Looking up user:", credentials.email)
-          const user = await prisma.user.findUnique({
-            where: {
-              email: credentials.email
-            },
-            select: {
-              id: true,
-              email: true,
-              name: true,
-              hashedPassword: true,
-              role: true,
-              image: true
-            }
-          })
+          const userResult = await db
+            .select()
+            .from(users)
+            .where(eq(users.email, credentials.email))
+
+          const user = userResult[0]
 
           if (!user || !user.hashedPassword) {
             console.error("No user found:", credentials.email)
@@ -86,42 +77,41 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             name: user.name,
             image: user.image,
-            role: user.role as UserType
-          };
-          console.log("Authorized user object:", authorizedUser);
-          return authorizedUser;
+            role: user.role,
+          }
+          console.log("Authorized user object:", authorizedUser)
+          return authorizedUser
         } catch (error) {
           console.error("Authentication error:", error)
-          throw error
-        } finally {
-          await prisma.$disconnect()
+          // Ensure we don't leak sensitive error details
+          throw new Error("An internal error occurred during authentication.")
         }
       }
     })
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log("JWT callback triggered. User:", user, "Token:", token);
+      console.log("JWT callback triggered. User:", user, "Token:", token)
       if (user) {
         token.id = user.id
         token.email = user.email
         token.name = user.name
         token.image = user.image
-        token.role = user.role as UserType
+        token.role = user.role
       }
-      console.log("Returning JWT token:", token);
+      console.log("Returning JWT token:", token)
       return token
     },
     async session({ session, token }) {
-      console.log("Session callback triggered. Session:", session, "Token:", token);
+      console.log("Session callback triggered. Session:", session, "Token:", token)
       if (token && session.user) {
         session.user.id = token.id as string
         session.user.email = token.email as string
         session.user.name = token.name as string | null
         session.user.image = token.image as string | null
-        session.user.role = token.role as UserType
+        session.user.role = token.role as UserRole
       }
-      console.log("Returning session:", session);
+      console.log("Returning session:", session)
       return session
     }
   },

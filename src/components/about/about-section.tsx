@@ -11,7 +11,7 @@ export const AboutSection = () => {
         {/* Hero Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/About/About.PNG"
+            src="/images/About/About.webp"
             alt="CadraTec About"
             fill
             className="object-cover"
@@ -92,7 +92,7 @@ export const AboutSection = () => {
             </div>
             <div className="relative h-[500px] overflow-hidden rounded-2xl">
               <Image
-                src="/images/About/Crafting-Excellence.PNG"
+                src="/images/About/Crafting-Excellence.webp"
                 alt="CadraTec Mission"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-700"
@@ -225,17 +225,17 @@ export const AboutSection = () => {
               {
                 name: "Marc Laurent",
                 role: "Master Watchmaker",
-                image: "/images/About/team1.jpeg"
+                image: "/images/About/team1.webp"
               },
               {
                 name: "Sophie Weber",
                 role: "Head of Innovation",
-                image: "/images/About/team2.jpg"
+                image: "/images/About/team2.webp"
               },
               {
                 name: "Thomas Mueller",
                 role: "Technical Director",
-                image: "/images/About/team3.jpeg"
+                image: "/images/About/team3.webp"
               }
             ].map((member, index) => (
               <motion.div

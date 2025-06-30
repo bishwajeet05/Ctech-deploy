@@ -28,7 +28,7 @@ export default function NewsMediaPage() {
         {/* Hero Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/news-media/news.jpg"
+            src="/images/news-media/news.webp"
             alt="News & Media"
             fill
             className="object-cover"
@@ -86,7 +86,7 @@ export default function NewsMediaPage() {
             >
               <div className="relative aspect-[4/3] overflow-hidden mb-6">
                 <Image
-                  src="/images/news-media/facility.png"
+                  src="/images/news-media/facility.webp"
                   alt="New Manufacturing Facility"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -113,7 +113,7 @@ export default function NewsMediaPage() {
             >
               <div className="relative aspect-[4/3] overflow-hidden mb-6">
                 <Image
-                  src="/images/news-media/award.jpg"
+                  src="/images/news-media/award.webp"
                   alt="Innovation Award"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -140,7 +140,7 @@ export default function NewsMediaPage() {
             >
               <div className="relative aspect-[4/3] overflow-hidden mb-6">
                 <Image
-                  src="/images/news-media/partner.jpg"
+                  src="/images/news-media/partner.webp"
                   alt="Partnership Announcement"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -183,12 +183,12 @@ export default function NewsMediaPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Gallery Items */}
             {[
-              { src: '/images/news-media/1.jpg', format: 'jpg' },
+              { src: '/images/news-media/1.webp', format: 'webp' },
               { src: '/images/news-media/2.webp', format: 'webp' },
-              { src: '/images/news-media/3.jpg', format: 'jpg' },
-              { src: '/images/news-media/5.avif', format: 'avif' },
-              { src: '/images/news-media/6.jpg', format: 'jpg' },
-              { src: '/images/news-media/44.jpg', format: 'jpg' }
+              { src: '/images/news-media/3.webp', format: 'webp' },
+              { src: '/images/news-media/5.webp', format: 'webp' },
+              { src: '/images/news-media/6.webp', format: 'webp' },
+              { src: '/images/news-media/44.webp', format: 'webp' }
             ].map((item, index) => (
               <motion.div
                 key={index}

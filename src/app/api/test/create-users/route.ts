@@ -27,7 +27,7 @@ export async function POST() {
       return await db.insert(users).values({
         id: nanoid(),
         email,
-        hashedPassword,
+          hashedPassword,
         role,
       }).returning().then(r => r[0]);
     }

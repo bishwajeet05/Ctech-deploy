@@ -34,13 +34,13 @@ const SidebarItem = ({
         className={cn(
           "flex items-center w-full px-3 py-2 text-sm rounded-md transition-colors text-[#4A4A4A] text-[15px] font-medium",
           active 
-            ? "bg-[#EEEEEE] text-[#4A4A4A] font-semibold" 
-            : "hover:bg-[#EEEEEE] hover:text-[#4A4A4A]"
+            ? "bg-blue-100 text-[#1a237e] font-semibold" 
+            : "hover:bg-blue-50 hover:text-blue-900"
         )}
       >
         <Icon className={cn(
           "h-[18px] w-[18px] mr-6",
-          active ? "text-[#4A4A4A]" : "text-[#4A4A4A]"
+          active ? "text-[#1a237e]" : "text-[#4A4A4A]"
         )} />
         <span>{label}</span>
       </button>
@@ -69,7 +69,7 @@ const Sidebar = ({ activePage, setActivePage }: SidebarProps) => {
       <div className="p-4">
         <div className="flex items-center justify-center py-2">
           <Image
-            src="/images/logo.png"
+            src="/images/Dashboard/logo.webp"
             alt="CadraTec Logo"
             width={160}
             height={40}

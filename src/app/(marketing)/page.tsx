@@ -106,7 +106,7 @@ export default function HomePage() {
             >
               <div className="aspect-[4/3] relative overflow-hidden">
                 <Image
-                  src="/images/Excellence/Expert-Craftsmanship.PNG"
+                  src="/images/Excellence/Expert-Craftsmanship.webp"
                   alt={t('excellence.items.craftsmanship.title')}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -129,7 +129,7 @@ export default function HomePage() {
             >
               <div className="aspect-[4/3] relative overflow-hidden">
                 <Image
-                  src="/images/Excellence/advanced_technology.png"
+                  src="/images/Excellence/advanced_technology.webp"
                   alt={t('excellence.items.technology.title')}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -152,7 +152,7 @@ export default function HomePage() {
             >
               <div className="aspect-[4/3] relative overflow-hidden">
                 <Image
-                  src="/images/Excellence/Dedicated-Support.PNG"
+                  src="/images/Excellence/Dedicated-Support.webp"
                   alt={t('excellence.items.support.title')}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"

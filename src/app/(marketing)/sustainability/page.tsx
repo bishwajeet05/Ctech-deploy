@@ -13,7 +13,7 @@ export default function SustainabilityPage() {
         {/* Hero Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/sustainability/sustain.jpg"
+            src="/images/sustainability/sustain.webp"
             alt="Sustainability at CadraTec"
             fill
             className="object-cover"

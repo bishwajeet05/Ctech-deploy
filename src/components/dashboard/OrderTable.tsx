@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { CheckCircle, Clock, ArrowRight, RefreshCw, ChevronUp, ChevronDown } from 'lucide-react';
+import { CheckCircle, Clock, ArrowRight, RefreshCw, ChevronUp, ChevronDown, AlertCircle } from 'lucide-react';
 import {
   ColumnDef,
   flexRender,
@@ -41,9 +41,9 @@ export const StatusBadge = ({ status }: { status: string }) => {
     switch (status) {
       case 'Delivered':
         return 'bg-[#E8F5E9] text-[#2E7D32] border-[#A5D6A7]';
-      case 'Pending':
+      case 'Late':
         return 'bg-[#FFF3E0] text-[#E65100] border-[#FFCC80]';
-      case 'Partial':
+      case 'On Time':
         return 'bg-[#E3F2FD] text-[#1565C0] border-[#90CAF9]';
       default:
         return 'bg-gray-100 text-gray-800 border-gray-300';
@@ -54,10 +54,10 @@ export const StatusBadge = ({ status }: { status: string }) => {
     switch (status) {
       case 'Delivered':
         return <CheckCircle className="w-3 h-3" />;
-      case 'Pending':
+      case 'Late':
+        return <AlertCircle className="w-3 h-3" />;
+      case 'On Time':
         return <Clock className="w-3 h-3" />;
-      case 'Partial':
-        return <RefreshCw className="w-3 h-3" />;
       default:
         return null;
     }

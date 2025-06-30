@@ -45,248 +45,278 @@ const tabs = [
   { id: 'delivered', label: 'Delivered' }
 ];
 
+const statusOptions = ["Late", "Delivered", "On Time"];
+function getRandomStatus(index: number) {
+  return statusOptions[index % statusOptions.length];
+}
+
 const orders = [
   {
     order: "2",
-    poNumber: "PO-001",
-    orderConfirmation: "AU-00274",
+    poNumber: "896821490",
+    orderConfirmation: "ON-00274",
     orderConfirmationDate: "25-Jul-24",
     requiredDeliveryDate: "30-Jul-24",
-    status: "Delivered"
+    status: getRandomStatus(0)
   },
   {
     order: "3",
-    poNumber: "PO-002",
-    orderConfirmation: "AU-00275",
+    poNumber: "896821490",
+    orderConfirmation: "ON-00275",
     orderConfirmationDate: "25-Jul-24",
     requiredDeliveryDate: "01-Aug-24",
-    status: "Partial"
+    status: getRandomStatus(1)
   },
   {
     order: "4",
-    poNumber: "PO-003",
-    orderConfirmation: "AU-00276",
+    poNumber: "896821490",
+    orderConfirmation: "ON-00276",
     orderConfirmationDate: "25-Jul-24",
     requiredDeliveryDate: "02-Aug-24",
-    status: "Pending"
+    status: getRandomStatus(2)
   },
   {
     order: "5",
-    poNumber: "PO-004",
-    orderConfirmation: "AU-00277",
+    poNumber: "896821490",
+    orderConfirmation: "ON-00277",
     orderConfirmationDate: "25-Jul-24",
     requiredDeliveryDate: "05-Aug-24",
-    status: "Delivered"
+    status: getRandomStatus(3)
   },
   {
     order: "6",
-    poNumber: "PO-005",
-    orderConfirmation: "AU-00278",
+    poNumber: "896821490",
+    orderConfirmation: "ON-00278",
     orderConfirmationDate: "25-Jul-24",
     requiredDeliveryDate: "07-Aug-24",
-    status: "Pending"
+    status: getRandomStatus(4)
   },
   {
     order: "7",
-    poNumber: "PO-006",
-    orderConfirmation: "AU-00279",
+    poNumber: "PO-629014",
+    orderConfirmation: "ON-00279",
     orderConfirmationDate: "25-Jul-24",
     requiredDeliveryDate: "15-Mar-25",
-    status: "Partial"
+    status: getRandomStatus(5)
   },
   {
     order: "8",
-    poNumber: "PO-007",
-    orderConfirmation: "AU-00280",
+    poNumber: "PO-629014",
+    orderConfirmation: "ON-00280",
     orderConfirmationDate: "26-Jul-24",
     requiredDeliveryDate: "20-Aug-24",
-    status: "Pending"
+    status: getRandomStatus(6)
   },
   {
     order: "9",
-    poNumber: "PO-008",
-    orderConfirmation: "AU-00281",
+    poNumber: "PO-629014",
+    orderConfirmation: "ON-00281",
     orderConfirmationDate: "26-Jul-24",
     requiredDeliveryDate: "25-Aug-24",
-    status: "Pending"
+    status: getRandomStatus(7)
   }
 ];
+
+const modelNumbers = ["632760", "216902", "9223333", "6842133"];
+function getRandomModelNo(index: number) {
+  return modelNumbers[index % modelNumbers.length];
+}
 
 const sampleOrderDetails: Record<string, OrderDetail[]> = {
   "2": [
     {
-      modelNo: "Silver Soleil",
+      modelNo: getRandomModelNo(0),
       qtyOrdered: 50,
       qtyDelivered: 50,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in end of Feb",
+      confirmedDeliveryDate: "2024-02-28",
+      actualDeliveryDate: "2024-02-28"
     },
     {
-      modelNo: "Black Soleil",
+      modelNo: getRandomModelNo(1),
       qtyOrdered: 60,
       qtyDelivered: 60,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     },
     {
-      modelNo: "Blue Soleil",
+      modelNo: getRandomModelNo(2),
       qtyOrdered: 60,
       qtyDelivered: 60,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in end of Feb",
+      confirmedDeliveryDate: "2024-02-28",
+      actualDeliveryDate: "2024-02-28"
     },
     {
-      modelNo: "Grenti 188C Soleil",
+      modelNo: getRandomModelNo(3),
       qtyOrdered: 50,
       qtyDelivered: 50,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     },
     {
-      modelNo: "Black / Gold Laser Pattern",
+      modelNo: getRandomModelNo(4),
       qtyOrdered: 3,
       qtyDelivered: 3,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in end of Feb",
+      confirmedDeliveryDate: "2024-02-28",
+      actualDeliveryDate: "2024-02-28"
     }
   ],
   "3": [
     {
-      modelNo: "Platinum Elite Series",
+      modelNo: getRandomModelNo(5),
       qtyOrdered: 75,
       qtyDelivered: 75,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     },
     {
-      modelNo: "Rose Gold Collection",
+      modelNo: getRandomModelNo(6),
       qtyOrdered: 45,
       qtyDelivered: 0,
       qtyPending: 45,
-      daysRemainingToOverdue: 15,
-      status: "Pending"
+      remarks: "Awaiting for diamond cost",
+      confirmedDeliveryDate: "2024-02-28",
+      actualDeliveryDate: "2024-02-28"
     },
     {
-      modelNo: "Diamond Cut Crystal",
+      modelNo: getRandomModelNo(7),
       qtyOrdered: 30,
       qtyDelivered: 30,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in end of Feb",
+      confirmedDeliveryDate: "2024-02-28",
+      actualDeliveryDate: "2024-02-28"
     }
   ],
   "4": [
     {
-      modelNo: "Sapphire Glass Pro",
+      modelNo: getRandomModelNo(8),
       qtyOrdered: 100,
       qtyDelivered: 0,
       qtyPending: 100,
-      daysRemainingToOverdue: 8,
-      status: "Pending"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     },
     {
-      modelNo: "Emerald Cut Premium",
+      modelNo: getRandomModelNo(9),
       qtyOrdered: 80,
       qtyDelivered: 0,
       qtyPending: 80,
-      daysRemainingToOverdue: 8,
-      status: "Pending"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     }
   ],
   "5": [
     {
-      modelNo: "Ruby Red Limited",
+      modelNo: getRandomModelNo(10),
       qtyOrdered: 25,
       qtyDelivered: 25,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     },
     {
-      modelNo: "Pearl White Special",
+      modelNo: getRandomModelNo(11),
       qtyOrdered: 40,
       qtyDelivered: 40,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in end of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     },
     {
-      modelNo: "Onyx Black Edition",
+      modelNo: getRandomModelNo(12),
       qtyOrdered: 35,
       qtyDelivered: 35,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     }
   ],
   "6": [
     {
-      modelNo: "Titanium Max",
+      modelNo: getRandomModelNo(13),
       qtyOrdered: 90,
       qtyDelivered: 0,
       qtyPending: 90,
-      daysRemainingToOverdue: 5,
-      status: "Pending"
+      remarks: "Will be delivered in end of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     },
     {
-      modelNo: "Carbon Fiber Ultra",
+      modelNo: getRandomModelNo(14),
       qtyOrdered: 70,
       qtyDelivered: 0,
       qtyPending: 70,
-      daysRemainingToOverdue: 5,
-      status: "Pending"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     },
     {
-      modelNo: "Ceramic Shield Pro",
+      modelNo: getRandomModelNo(15),
       qtyOrdered: 55,
       qtyDelivered: 0,
       qtyPending: 55,
-      daysRemainingToOverdue: 5,
-      status: "Pending"
+      remarks: "Will be delivered in end of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     }
   ],
   "7": [
     {
-      modelNo: "Circular 1 Mineral",
+      modelNo: getRandomModelNo(16),
       qtyOrdered: 65,
       qtyDelivered: 65,
       qtyPending: 0,
-      daysRemainingToOverdue: null,
-      status: "Delivered"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     },
     {
-      modelNo: "Circular 2 Sapphire",
+      modelNo: getRandomModelNo(17),
       qtyOrdered: 85,
       qtyDelivered: 0,
       qtyPending: 85,
-      daysRemainingToOverdue: 12,
-      status: "Pending"
+      remarks: "Will be delivered in end of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     }
   ],
   "8": [
     {
-      modelNo: "Square 1 Mineral",
+      modelNo: getRandomModelNo(18),
       qtyOrdered: 95,
       qtyDelivered: 0,
       qtyPending: 95,
-      daysRemainingToOverdue: 20,
-      status: "Pending"
+      remarks: "Will be delivered in mid of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     }
   ],
   "9": [
     {
-      modelNo: "Square 2 Sapphire",
+      modelNo: getRandomModelNo(19),
       qtyOrdered: 110,
       qtyDelivered: 0,
       qtyPending: 110,
-      daysRemainingToOverdue: 25,
-      status: "Pending"
+      remarks: "Will be delivered in end of Feb",
+      confirmedDeliveryDate: "2024-02-15",
+      actualDeliveryDate: "2024-02-15"
     }
   ]
 };
@@ -342,133 +372,127 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F9FA]">
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex overflow-hidden min-h-screen">
         <Sidebar activePage={activePage} setActivePage={setActivePage} />
-        <main className="flex-1 overflow-y-auto px-4">
-          <div className="h-full py-4">
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm h-full">
+        <main className="flex-1 overflow-y-auto px-4 flex flex-col min-h-screen">
+          <div className="flex-grow py-4 flex flex-col">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm w-full min-h-full flex flex-col">
               {activePage === "Orders" && (
                 <>
-              <div className="p-5 border-b border-gray-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h1 className="text-2xl font-semibold text-gray-900">Orders</h1>
-                    <p className="mt-1 text-sm text-gray-500">
-                      Manage phone orders, email invoices, and gather payments with the help of draft orders.
-                    </p>
+                  <div className="p-5 border-b border-gray-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h1 className="text-2xl font-semibold text-gray-900">Orders</h1>
+                        <p className="mt-1 text-sm text-gray-500">
+                          Manage phone orders, email invoices, and gather payments with the help of draft orders.
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <ActionButton 
+                          icon={<RefreshCw className="h-4 w-4" />}
+                          className="bg-[#EEEEEE] hover:bg-[#E0E0E0] text-gray-700"
+                        >
+                          Sync
+                        </ActionButton>
+                        <ActionButton 
+                          variant="primary" 
+                          className="px-[18px] py-[10px] shadow-[0px_4px_8px_rgba(0,0,0,0.1)] bg-blue-600 hover:bg-blue-700 text-white"
+                        >
+                          New Order
+                        </ActionButton>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <ActionButton 
-                      icon={<RefreshCw className="h-4 w-4" />}
-                      className="bg-[#EEEEEE] hover:bg-[#E0E0E0] text-gray-700"
-                    >
-                      Sync
-                    </ActionButton>
-                    <ActionButton 
-                      variant="primary" 
-                      className="px-[18px] py-[10px] shadow-[0px_4px_8px_rgba(0,0,0,0.1)] bg-blue-600 hover:bg-blue-700 text-white"
-                    >
-                      New Order
-                    </ActionButton>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-5">
+                    <StatCard
+                      icon={<Package className="h-5 w-5" />}
+                      value="8"
+                      label="Total orders"
+                      className="bg-gradient-to-br from-[#FFF5F0] to-[#FFE4D9] rounded-2xl shadow-sm"
+                      iconColor="bg-white/60"
+                      iconTextColor="text-[#FF5722]"
+                      valueClassName="text-3xl font-bold text-[#FF5722]"
+                      labelClassName="text-sm font-medium text-[#FF5722]/80"
+                    />
+                    <StatCard
+                      icon={<RefreshCw className="h-5 w-5" />}
+                      value="12"
+                      label="Items Pending"
+                      className="bg-gradient-to-br from-[#FFF0FB] to-[#FFE0F4] rounded-2xl shadow-sm"
+                      iconColor="bg-white/60"
+                      iconTextColor="text-[#E91E63]"
+                      valueClassName="text-3xl font-bold text-[#E91E63]"
+                      labelClassName="text-sm font-medium text-[#E91E63]/80"
+                    />
+                    <StatCard
+                      icon={<Truck className="h-5 w-5" />}
+                      value="2"
+                      label="Delivered Orders"
+                      className="bg-gradient-to-br from-[#F0F7FF] to-[#E1EFFF] rounded-2xl shadow-sm"
+                      iconColor="bg-white/60"
+                      iconTextColor="text-[#2196F3]"
+                      valueClassName="text-3xl font-bold text-[#2196F3]"
+                      labelClassName="text-sm font-medium text-[#2196F3]/80"
+                    />
+                    <StatCard
+                      icon={<LineChart className="h-5 w-5" />}
+                      value="2"
+                      label="Partial Orders"
+                      className="bg-gradient-to-br from-[#F0FFF7] to-[#E6FFE6] rounded-2xl shadow-sm"
+                      iconColor="bg-white/60"
+                      iconTextColor="text-[#4CAF50]"
+                      valueClassName="text-3xl font-bold text-[#4CAF50]"
+                      labelClassName="text-sm font-medium text-[#4CAF50]/80"
+                    />
                   </div>
-                </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-5">
-                <StatCard
-                  icon={<Package className="h-5 w-5" />}
-                  value="8"
-                  label="Total orders"
-                  className="bg-gradient-to-br from-[#FFF5F0] to-[#FFE4D9] rounded-2xl shadow-sm"
-                  iconColor="bg-white/60"
-                  iconTextColor="text-[#FF5722]"
-                  valueClassName="text-3xl font-bold text-[#FF5722]"
-                  labelClassName="text-sm font-medium text-[#FF5722]/80"
-                />
-                <StatCard
-                  icon={<RefreshCw className="h-5 w-5" />}
-                  value="12"
-                  label="Items Pending"
-                  className="bg-gradient-to-br from-[#FFF0FB] to-[#FFE0F4] rounded-2xl shadow-sm"
-                  iconColor="bg-white/60"
-                  iconTextColor="text-[#E91E63]"
-                  valueClassName="text-3xl font-bold text-[#E91E63]"
-                  labelClassName="text-sm font-medium text-[#E91E63]/80"
-                />
-                <StatCard
-                  icon={<Truck className="h-5 w-5" />}
-                  value="2"
-                  label="Delivered Orders"
-                  className="bg-gradient-to-br from-[#F0F7FF] to-[#E1EFFF] rounded-2xl shadow-sm"
-                  iconColor="bg-white/60"
-                  iconTextColor="text-[#2196F3]"
-                  valueClassName="text-3xl font-bold text-[#2196F3]"
-                  labelClassName="text-sm font-medium text-[#2196F3]/80"
-                />
-                <StatCard
-                  icon={<LineChart className="h-5 w-5" />}
-                  value="2"
-                  label="Partial Orders"
-                  className="bg-gradient-to-br from-[#F0FFF7] to-[#E6FFE6] rounded-2xl shadow-sm"
-                  iconColor="bg-white/60"
-                  iconTextColor="text-[#4CAF50]"
-                  valueClassName="text-3xl font-bold text-[#4CAF50]"
-                  labelClassName="text-sm font-medium text-[#4CAF50]/80"
-                />
-              </div>
-
-              <div className="px-5 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-gray-200">
-                <Tabs
-                  tabs={tabs}
-                  activeTab={activeTab}
-                  onTabChange={setActiveTab}
-                />
-                
-                <div className="flex items-center gap-4">
-                  <SearchBar />
-                  <div className="flex items-center gap-2 bg-[#EEEEEE]/50 p-1 rounded-lg border border-gray-200">
-                    <button
-                      onClick={() => setViewMode('table')}
-                      className={cn(
-                        "p-2 rounded-md transition-colors",
-                        viewMode === 'table' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700 hover:bg-[#EEEEEE]"
-                      )}
-                    >
-                      <Layout className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => setViewMode('kanban')}
-                      className={cn(
-                        "p-2 rounded-md transition-colors",
-                        viewMode === 'kanban' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700 hover:bg-[#EEEEEE]"
-                      )}
-                    >
-                      <Columns className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => setViewMode('grid')}
-                      className={cn(
-                        "p-2 rounded-md transition-colors",
-                        viewMode === 'grid' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700 hover:bg-[#EEEEEE]"
-                      )}
-                    >
-                      <LayoutGrid className="h-4 w-4" />
-                    </button>
+                  <div className="px-5 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-gray-200">
+                    <Tabs
+                      tabs={tabs}
+                      activeTab={activeTab}
+                      onTabChange={setActiveTab}
+                    />
+                    
+                    <div className="flex items-center gap-4">
+                      <SearchBar />
+                      <div className="flex items-center gap-2 bg-[#EEEEEE]/50 p-1 rounded-lg border border-gray-200">
+                        <button
+                          onClick={() => setViewMode('table')}
+                          className={cn(
+                            "p-2 rounded-md transition-colors",
+                            viewMode === 'table' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700 hover:bg-[#EEEEEE]"
+                          )}
+                        >
+                          <Layout className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => setViewMode('kanban')}
+                          className={cn(
+                            "p-2 rounded-md transition-colors",
+                            viewMode === 'kanban' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700 hover:bg-[#EEEEEE]"
+                          )}
+                        >
+                          <Columns className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => setViewMode('grid')}
+                          className={cn(
+                            "p-2 rounded-md transition-colors",
+                            viewMode === 'grid' ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700 hover:bg-[#EEEEEE]"
+                          )}
+                        >
+                          <LayoutGrid className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="px-5 py-3 border-t border-gray-200 overflow-x-auto">
-                <div className="min-w-full">
-                  {renderView()}
-                </div>
-              </div>
-          <OrderDetailsModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            orderDetails={modalOrderId ? sampleOrderDetails[modalOrderId] : []}
-            orderNumber={modalOrderNo || ''}
-          />
+                  <div className="px-5 py-3 border-t border-gray-200 overflow-x-auto">
+                    <div className="min-w-full">
+                      {renderView()}
+                    </div>
+                  </div>
                 </>
               )}
               {activePage === "Messages" && (

@@ -36,7 +36,7 @@ export const BentoGridSection = () => {
                   className="relative aspect-square rounded-2xl overflow-hidden"
                 >
                   <Image
-                    src="/images/services/dial-restoration.png"
+                    src="/images/services/dial-restoration.webp"
                     alt="Expert Watch Restoration"
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-700"
@@ -66,7 +66,7 @@ export const BentoGridSection = () => {
                   className="relative aspect-square rounded-2xl overflow-hidden bg-white shadow-lg"
                 >
                   <Image
-                    src="/images/services/services.PNG"
+                    src="/images/services/services.webp"
                     alt="Comprehensive Watch Services"
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-700"
@@ -96,7 +96,7 @@ export const BentoGridSection = () => {
                   className="relative aspect-square rounded-2xl overflow-hidden bg-black"
                 >
                   <Image
-                    src="/images/services/lab-testing.png"
+                    src="/images/services/lab-testing.webp"
                     alt="Laboratory Testing"
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-700"
@@ -151,7 +151,7 @@ export const BentoGridSection = () => {
               className="relative h-[85vh] overflow-hidden rounded-2xl bg-neutral-100"
             >
               <Image
-                src="/images/bento-grid/luxury_experience.png"
+                src="/images/bento-grid/luxury_experience.webp"
                 alt="Luxury Experience"
                 fill
                 className="object-cover"
@@ -177,7 +177,7 @@ export const BentoGridSection = () => {
                 className="relative h-[65vh] overflow-hidden rounded-2xl bg-blue-50"
               >
                 <Image
-                  src="/images/bento-grid/advanced_technology.png"
+                  src="/images/bento-grid/advanced_technology.webp"
                   alt="Advanced Technology"
                   fill
                   className="object-cover"
@@ -200,7 +200,7 @@ export const BentoGridSection = () => {
                 className="relative h-[65vh] overflow-hidden rounded-2xl bg-neutral-100"
               >
                 <Image
-                  src="/images/bento-grid/CadraTech_Experience.png"
+                  src="/images/bento-grid/CadraTech_Experience.webp"
                   alt="Your CadraTec Experience"
                   fill
                   className="object-cover"

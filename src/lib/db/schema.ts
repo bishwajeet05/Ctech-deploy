@@ -5,8 +5,8 @@ import {
   varchar,
   integer,
   real,
-  pgEnum,
-  primaryKey,
+  pgEnum
+  // primaryKey, // removed unused import
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 

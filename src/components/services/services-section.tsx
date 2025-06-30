@@ -41,14 +41,14 @@ const specializedServices = [
     title: "Lab Testing",
     description: "Comprehensive lab testing facilities based on NIHS Standards. Contact us for detailed information about our testing capabilities.",
     icon: "🔬",
-    image: "/images/services/lab-testing.jpg",
+    image: "/images/services/lab-testing.webp",
     imageAlt: "CadraTec precision lab testing equipment"
   },
   {
     title: "Dial Restoration",
     description: "Expert restoration services for vintage and contemporary watch dials. Send us pictures for a detailed estimation.",
     icon: "🔄",
-    image: "/images/services/dial-restoration.jpg",
+    image: "/images/services/dial-restoration.webp",
     imageAlt: "Vintage watch dial restoration process"
   }
 ];
@@ -60,7 +60,7 @@ export const ServicesSection = () => {
       <div className="relative h-[60vh] bg-black overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/services/services.PNG"
+            src="/images/services/services.webp"
             alt="CadraTec Services"
             fill
             className="object-cover"

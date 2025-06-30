@@ -24,7 +24,7 @@ const Header = ({ title, description, actions }: HeaderProps) => {
           </button>
           <button className="relative w-8 h-8 rounded-full overflow-hidden">
             <Image
-              src="/images/Dashboard/profile.jpg"
+              src="/images/Dashboard/profile.webp"
               alt="Profile"
               fill
               className="object-cover"

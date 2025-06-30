@@ -48,7 +48,7 @@ const collections = [
     id: "haute-horlogerie",
     name: "Haute Horlogerie",
     description: "Masterpieces of intricate design and exceptional craftsmanship for the most prestigious timepieces.",
-    image: "/images/Products/Haute Horlogerie.jpeg",
+    image: "/images/Products/Haute Horlogerie.webp",
     features: [
       "Hand-finished guilloché patterns",
       "Mother-of-pearl inlays",
@@ -60,7 +60,7 @@ const collections = [
     id: "classic-elegance",
     name: "Classic Elegance",
     description: "Timeless designs that embody traditional watchmaking aesthetics with modern precision.",
-    image: "/images/Products/Classic Elegance.jpg",
+    image: "/images/Products/Classic Elegance.webp",
     features: [
       "Sunburst finishing",
       "Applied hour markers",
@@ -72,7 +72,7 @@ const collections = [
     id: "sport-professional",
     name: "Sport Professional",
     description: "High-performance dials engineered for durability and exceptional legibility.",
-    image: "/images/Products/Sport Professional.jpg",
+    image: "/images/Products/Sport Professional.webp",
     features: [
       "SuperLuminova applications",
       "Ceramic composites",
@@ -86,22 +86,22 @@ const specialties = [
   {
     name: "Custom Dials",
     description: "Bespoke creations tailored to your unique specifications.",
-    image: "/images/Products/Specialized-Services/Costum-Dials.png"
+    image: "/images/Products/Specialized-Services/Costum-Dials.webp"
   },
   {
     name: "Limited Editions",
     description: "Exclusive series featuring unique materials and designs.",
-    image: "/images/Products/Specialized-Services/Limited-Editions.png"
+    image: "/images/Products/Specialized-Services/Limited-Editions.webp"
   },
   {
     name: "Complications",
     description: "Specialized dials for complex watch mechanisms.",
-    image: "/images/Products/Specialized-Services/Compliations.png"
+    image: "/images/Products/Specialized-Services/Compliations.webp"
   },
   {
     name: "Restoration",
     description: "Expert restoration of vintage and antique watch dials.",
-    image: "/images/Products/Specialized-Services/Restoration.png"
+    image: "/images/Products/Specialized-Services/Restoration.webp"
   }
 ];
 
@@ -109,17 +109,17 @@ const finishes = [
   {
     name: "Sunburst Pattern",
     description: "Radial brushed pattern emanating from the center, creating a dynamic play of light",
-    image: "/images/Products/Exquisite-Finishes/09E9123D-9075-4B2E-9FB4-3EE3916DC10D-1-p3ad4257h33xd5ahwi8dozs877zcqe55jogd6ck1so.jpeg"
+    image: "/images/Products/Exquisite-Finishes/09E9123D-9075-4B2E-9FB4-3EE3916DC10D-1-p3ad4257h33xd5ahwi8dozs877zcqe55jogd6ck1so.webp"
   },
   {
     name: "Guilloché Art",
     description: "Intricate geometric patterns created through traditional hand-engraving techniques",
-    image: "/images/Products/Exquisite-Finishes/IMG_5379-p49v407irqionu6kt6zvajrjg2o5uxi0pvc4ou46xk.jpg"
+    image: "/images/Products/Exquisite-Finishes/IMG_5379-p49v407irqionu6kt6zvajrjg2o5uxi0pvc4ou46xk.webp"
   },
   {
     name: "Grand Feu Enamel",
     description: "Timeless beauty achieved through multiple layers of fired enamel",
-    image: "/images/Products/Exquisite-Finishes/IMG_5380-p49v4ajquwwu7jrk4tgrjz5lzb977ln2faigyvov14.jpg"
+    image: "/images/Products/Exquisite-Finishes/IMG_5380-p49v4ajquwwu7jrk4tgrjz5lzb977ln2faigyvov14.webp"
   }
 ];
 
@@ -131,7 +131,7 @@ export default function ProductsClient() {
         <div className="absolute inset-0">
           <div className="absolute inset-0">
             <Image
-              src="/images/Products/Products.png"
+              src="/images/Products/Products.webp"
               alt="Luxury Watch Collections"
               fill
               className="object-cover"

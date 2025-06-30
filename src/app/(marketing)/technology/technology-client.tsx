@@ -57,42 +57,42 @@ const materialItems = [
     title: "Premium Material Selection",
     description: "Each dial begins with the careful selection of premium materials, ensuring both luxury and durability.",
     href: "#",
-    image: "/images/Technology/Material/Premium-material1.png"
+    image: "/images/Technology/Material/Premium-material1.webp"
   },
   {
     id: "material-2",
     title: "Advanced Manufacturing",
     description: "Our state-of-the-art manufacturing processes combine traditional craftsmanship with cutting-edge technology.",
     href: "#",
-    image: "/images/Technology/Material/Premium-material2.png"
+    image: "/images/Technology/Material/Premium-material2.webp"
   },
   {
     id: "material-3",
     title: "Precision Engineering",
     description: "Every component is engineered to meet the highest standards of precision and quality.",
     href: "#",
-    image: "/images/Technology/Material/Premium-material3.png"
+    image: "/images/Technology/Material/Premium-material3.webp"
   },
   {
     id: "material-4",
     title: "Surface Treatment",
     description: "Advanced surface treatments ensure both aesthetic beauty and long-lasting durability.",
     href: "#",
-    image: "/images/Technology/Material/Premium-material4.png"
+    image: "/images/Technology/Material/Premium-material4.webp"
   },
   {
     id: "material-5",
     title: "Quality Control",
     description: "Rigorous quality control processes ensure every piece meets our exacting standards.",
     href: "#",
-    image: "/images/Technology/Material/Premium-material5.png"
+    image: "/images/Technology/Material/Premium-material5.webp"
   },
   {
     id: "material-6",
     title: "Final Assembly",
     description: "Expert craftsmen carefully assemble each component to create the perfect timepiece.",
     href: "#",
-    image: "/images/Technology/Material/Premium-material6.png"
+    image: "/images/Technology/Material/Premium-material6.webp"
   }
 ];
 

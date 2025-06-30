@@ -10,8 +10,9 @@ type OrderDetail = {
   qtyOrdered: number;
   qtyDelivered: number;
   qtyPending: number;
-  daysRemainingToOverdue: number | null;
-  status: string;
+  remarks: string;
+  confirmedDeliveryDate?: string;
+  actualDeliveryDate?: string;
 };
 
 type OrderDetailsModalProps = {
@@ -62,10 +63,7 @@ const OrderDetailsModal = ({ isOpen, onClose, orderDetails, orderNumber }: Order
                     Qty Pending
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Days Remaining To Overdue
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
+                    Remarks
                   </th>
                 </tr>
               </thead>
@@ -85,10 +83,7 @@ const OrderDetailsModal = ({ isOpen, onClose, orderDetails, orderNumber }: Order
                       {detail.qtyPending}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {detail.daysRemainingToOverdue ?? '-'}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <StatusBadge status={detail.status} />
+                      {detail.remarks}
                     </td>
                   </tr>
                 ))}
